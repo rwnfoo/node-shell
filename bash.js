@@ -1,14 +1,20 @@
 const process = require("process");
+const pwd = require("./pwd.js")
+const ls = require("./ls.js")
+const cat = require("./cat.js")
 
 process.stdout.write("prompt > ");
 
 process.stdin.on("data", (data) => {
-  let cmd = data.toString().trim();
+  let cmd = data.toString().trim()
   if (cmd === "pwd") {
-    var output = process.cwd();
-  } else {
-    var output = "You typed: " + cmd;
+    pwd()
+  } else if (cmd === "ls") {
+    ls()
+  } else if (cmd.split(' ')[0] === "cat") {
+    cat(cmd.split(' ')[1])
   }
-  process.stdout.write(output);
-  process.stdout.write("\nprompt > ");
-});
+   else {
+    process.stdout.write(cmd + " is not a legit command, try again! \nprompt > ")
+  }
+})
